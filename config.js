@@ -1,6 +1,7 @@
 module.exports.config = {
 
 	mqtt: {
+                instance: process.env.MQTT_INSTANCE || '',
 		host: process.env.MQTT_HOST,
 		username: process.env.MQTT_USERNAME,
 		password: process.env.MQTT_PASSWORD,
@@ -11,6 +12,7 @@ module.exports.config = {
 	nut: {
 		host: process.env.NUT_HOST,
 		port: process.env.NUT_PORT || 3493,
+                name: process.env.NUT_NAME || '',
 		username: process.env.NUT_USERNAME,
 		password: process.env.NUT_PASSWORD,
 		interval: process.env.NUT_INTERVAL || 2000,

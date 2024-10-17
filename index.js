@@ -4,10 +4,17 @@ const { version } = require('./package');
 
 const { Platform } = require('./platform');
 
+//var names = JSON.parse(config.nut.names);
+//var topicname = 
+
+
+
+
 const topics = {
 	state: () => `${config.mqtt.path}/state`,
-	update: ({ name }, topic) => `${config.mqtt.path}/${name}/${topic}`,
+        update: ({ name }, topic) => `${config.mqtt.path}/${name}/${topic}`,
 };
+
 
 const format = (type, args) => [
 	`[${type.toUpperCase()}]`,
@@ -54,9 +61,16 @@ nut.on('update', (device, topic, data) => {
 		log('nut', `  > ${JSON.stringify(data)}`);
 	}
 
+        var name = device.name;
+
+        if (config.nut.name != '')  device.name = config.nut.name;
+
 	mqtt.publish(topics.update(device, topic), JSON.stringify(data), {
 		retain: true,
 	});
+
+        device.name = name;
+
 });
 
 mqtt.on('connect', () => log('mqtt', `connected to ${config.mqtt.host}`));
